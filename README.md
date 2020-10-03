@@ -9,3 +9,5 @@ Kernel command line: root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:
 --
 
 Flash type: Macronix 25L12835F
+
+WIFI chip: RTL8822BS
