@@ -12,7 +12,7 @@ targerpath=/
 smartcopy=/script/smart_copy.sh
 
 #check flash space
-/script/check_update.sh >> /dev/ttymxc0 || exit 1
+/script/check_update.sh >> /dev/console || exit 1
 
 cd $updatepath
 for file in `find . -type f`; do
@@ -28,3 +28,13 @@ for file in `find . -type d`; do
 		mkdir $targerpath/$file
 	fi
 done
+
+if [ -e /tmp/copy_lib ]; then
+	echo 6 > /tmp/update_status
+	sleep 1
+	killall ARMHiCar
+	sleep 0.5
+	cp /tmp/copy_lib/* /usr/lib/
+	cp /tmp/copy_cgi/* /etc/boa/cgi-bin/
+	sync
+fi

@@ -13,7 +13,18 @@ targetpath=/
 totalSize=0
 leftSize=`df -B 1 | grep dev/root | awk '{print $4}'`
 
-tmpFileList="./usr/sbin/fakeiOSDevice,./usr/sbin/ui.tar.gz,./usr/sbin/ARMadb-driver,./usr/sbin/AppleCarPlay"
+tmpFileList=""
+tmpLibPath=/tmp/lib/
+tmpBinPath=/tmp/bin/
+test -d $tmpBinPath || tmpFileList="./usr/sbin/fakeiOSDevice,./usr/sbin/ui.tar.gz,./usr/sbin/ARMadb-driver,./usr/sbin/AppleCarPlay"
+test -d $tmpLibPath || tmpLibPath=/tmp/hicar_lib
+for file in `find $tmpLibPath -type f`; do
+	tmpFileList="$tmpFileList,./usr/lib/`basename $file`"
+done
+for file in `find $tmpBinPath -type f`; do
+	tmpFileList="$tmpFileList,./usr/sbin/`basename $file`"
+done
+
 cd $updatepath
 for file in `find . -type f`; do
 	if [ `dirname $file` == "./tmp" ]; then
